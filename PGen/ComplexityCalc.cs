@@ -31,6 +31,30 @@ namespace PGen
             }
         }
 
+        public static HashSet<string> GetConsecutiveSubstrings(string password)
+        {
+            var substrings = new HashSet<string>();
+            char[] letters = password.ToCharArray();
+            for (int size = 1; size < letters.Length; ++size)
+            {
+                // get substrings of 'size' words
+                for (int start = 0; start <= letters.Length - size; ++start)
+                {
+                    char[] before = new char[start];
+                    char[] destination = new char[size];
+                    char[] after = new char[letters.Length - (size + start)];
+                    Array.Copy(letters, 0, before, 0, before.Length);
+                    Array.Copy(letters, start, destination, 0, destination.Length);
+                    Array.Copy(letters, start + destination.Length, after, 0, after.Length);
+
+                    substrings.Add(string.Join("",before));
+                    substrings.Add(string.Join("", destination));
+                    substrings.Add(string.Join("", after));
+                }
+            }
+            return substrings;
+        }
+
         public static void ShitlistCheck()
         {
             Console.WriteLine("=======================direct Manner===============");

@@ -1,4 +1,9 @@
-﻿namespace PGen
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+
+namespace PGen
 {
     using Obfuscation;
     using System;
@@ -37,6 +42,24 @@
             if (ComplexityCalc.wordlist.Count == 0)
                 ComplexityCalc.CreateUniqueShitlist();
 
+            var sw = Stopwatch.StartNew();
+            var pwdString = ComplexityCalc.GetConsecutiveSubstrings(password);
+
+            IEnumerable<string> intersectList = pwdString.Intersect(ComplexityCalc.wordlist);
+
+            int wordsInShitlist = intersectList.Count();
+            sw.Stop();
+            long t1 = sw.ElapsedMilliseconds;
+            sw.Restart();
+            wordsInShitlist = 0;
+            
+            foreach(var shit in ComplexityCalc.wordlist)
+                if (password.Contains(shit))
+                    wordsInShitlist++;
+
+            
+            sw.Stop();
+            long t2 = sw.ElapsedMilliseconds;
             int score = 0;
 
             if (password.Length < 1)
