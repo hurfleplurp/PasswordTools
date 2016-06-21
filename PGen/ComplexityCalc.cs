@@ -30,5 +30,34 @@ namespace PGen
                 while (line != null);
             }
         }
+
+        public static void ShitlistCheck()
+        {
+            Console.WriteLine("=======================direct Manner===============");
+
+            Exact_Matching S = new Exact_Matching();
+            string pattern = "abcdaaabchoabcd";
+            char[] Stest = pattern.ToCharArray();
+            char[] Stest1;
+            int z = 0;
+
+
+            /// Direct test using the Z-block function 
+            int[] M = S.Zblock(Stest);
+
+            for (int i = 0; i < M.Length; i++)
+            {
+                Console.WriteLine(M[i].ToString());
+            }
+            Console.WriteLine("=======================Indirect Manner===============");
+            /// Indirect test using the Zcalculate function
+            Console.WriteLine("the first z value = 0");
+            for (int i = 1; i < Stest.Length; i++)
+            {
+                Stest1 = S.Ssplit(i, Stest);
+                z = S.Zcalculate(Stest, Stest1);
+                Console.WriteLine(z);
+            }
+        }
     }
 }
