@@ -243,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/PGen/rockyou.txt
+/PGen/Resources/shitlist_.txt

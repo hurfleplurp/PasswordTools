@@ -45,21 +45,24 @@ namespace PGen
             var sw = Stopwatch.StartNew();
             var pwdString = ComplexityCalc.GetConsecutiveSubstrings(password);
 
-            IEnumerable<string> intersectList = pwdString.Intersect(ComplexityCalc.wordlist);
-
-            int wordsInShitlist = intersectList.Count();
+            //foreach (var hashSubSet in ComplexityCalc.SplitLargeList())
+            //    wordsInShitlist += pwdString.Intersect(hashSubSet).Count();
+            var wordsInShitlist = pwdString.Intersect(ComplexityCalc.wordlist);
             sw.Stop();
-            long t1 = sw.ElapsedMilliseconds;
-            sw.Restart();
-            wordsInShitlist = 0;
+            TimeSpan t1 = sw.Elapsed;
+            wordsInShitlist.Count();
+
+            var sw2 = Stopwatch.StartNew();
+            var wordsInShitlist2 = new HashSet<string>();
             
             foreach(var shit in ComplexityCalc.wordlist)
                 if (password.Contains(shit))
-                    wordsInShitlist++;
+                    wordsInShitlist2.Add(shit);
 
             
-            sw.Stop();
-            long t2 = sw.ElapsedMilliseconds;
+            sw2.Stop();
+            TimeSpan t2 = sw2.Elapsed;
+            TimeSpan t3 = t2 - t1;
             int score = 0;
 
             if (password.Length < 1)

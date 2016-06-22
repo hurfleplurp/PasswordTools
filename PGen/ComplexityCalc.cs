@@ -31,6 +31,33 @@ namespace PGen
             }
         }
 
+        public static List<HashSet<string>> SplitLargeList()
+        {
+            var HashSetList = new List<HashSet<string>>();
+
+            int counter = 0;
+            int i = 0;
+            var tempWordList = new List<string>();
+
+            foreach (var word in wordlist)
+            {
+                if (counter < 10000)
+                {
+                    tempWordList.Add(word);
+                    counter++;
+                }
+                else
+                {
+                    HashSetList.Add(new HashSet<string>(tempWordList));
+                    tempWordList.Clear();
+                    counter = 0;
+                }
+            }
+            //tempHashSet.Clear();
+            return HashSetList;
+        }
+
+
         public static HashSet<string> GetConsecutiveSubstrings(string password)
         {
             var substrings = new HashSet<string>();
