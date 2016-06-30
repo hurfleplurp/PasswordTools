@@ -42,28 +42,44 @@ namespace PGen
             if (ComplexityCalc.wordlist.Count == 0)
                 ComplexityCalc.CreateUniqueShitlist();
 
-            var sw = Stopwatch.StartNew();
+            /********* HASHSET INTERSECT SEARCH ********/
+            //var sw = Stopwatch.StartNew();
+
             var pwdString = ComplexityCalc.GetConsecutiveSubstrings(password);
 
-            //foreach (var hashSubSet in ComplexityCalc.SplitLargeList())
-            //    wordsInShitlist += pwdString.Intersect(hashSubSet).Count();
             var wordsInShitlist = pwdString.Intersect(ComplexityCalc.wordlist);
-            sw.Stop();
-            TimeSpan t1 = sw.Elapsed;
-            wordsInShitlist.Count();
 
-            var sw2 = Stopwatch.StartNew();
-            var wordsInShitlist2 = new HashSet<string>();
+            //sw.Stop();
+            //TimeSpan t1 = sw.Elapsed;
+            int badWords = wordsInShitlist.Count();
+
+            /********* .NET LINQ SEARCH ********/
+            //var sw2 = Stopwatch.StartNew();
+            //var wordsInShitlist2 = new HashSet<string>();
             
-            foreach(var shit in ComplexityCalc.wordlist)
-                if (password.Contains(shit))
-                    wordsInShitlist2.Add(shit);
+            //foreach(var shit in ComplexityCalc.wordlist)
+            //    if (password.Contains(shit))
+            //        wordsInShitlist2.Add(shit);
 
             
-            sw2.Stop();
-            TimeSpan t2 = sw2.Elapsed;
-            TimeSpan t3 = t2 - t1;
+            //sw2.Stop();
+            //TimeSpan t2 = sw2.Elapsed;
+
+            /********* Z-ALGORITHM SEARCH ********/
+            //var sw3 = Stopwatch.StartNew();
+            //var wordsInShitlist3 = new HashSet<string>();
+
+            //foreach (var shit in ComplexityCalc.wordlist)
+            //    if (ComplexityCalc.zAlgorithm(shit, password))
+            //        wordsInShitlist3.Add(shit);
+
+            //sw3.Stop();
+            //TimeSpan t3 = sw3.Elapsed;
+
             int score = 0;
+
+            if (badWords > 0)
+                score -= 2;
 
             if (password.Length < 1)
                 return PasswordScore.Blank;

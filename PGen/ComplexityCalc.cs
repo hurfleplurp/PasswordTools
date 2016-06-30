@@ -24,7 +24,9 @@ namespace PGen
 
                 do
                 {
-                    wordlist.Add(line);
+                    if (line.Count() > 3)
+                        wordlist.Add(line);
+
                     line = slrdr.ReadLine();
                 }
                 while (line != null);
@@ -36,7 +38,7 @@ namespace PGen
             var HashSetList = new List<HashSet<string>>();
 
             int counter = 0;
-            int i = 0;
+
             var tempWordList = new List<string>();
 
             foreach (var word in wordlist)
@@ -53,7 +55,7 @@ namespace PGen
                     counter = 0;
                 }
             }
-            //tempHashSet.Clear();
+            
             return HashSetList;
         }
 
@@ -65,50 +67,63 @@ namespace PGen
             for (int size = 1; size < letters.Length; ++size)
             {
                 // get substrings of 'size' words
-                for (int start = 0; start <= letters.Length - size; ++start)
+                for (int start = 1; start <= letters.Length - size; ++start)
                 {
                     char[] before = new char[start];
                     char[] destination = new char[size];
                     char[] after = new char[letters.Length - (size + start)];
+                                        
                     Array.Copy(letters, 0, before, 0, before.Length);
                     Array.Copy(letters, start, destination, 0, destination.Length);
                     Array.Copy(letters, start + destination.Length, after, 0, after.Length);
 
-                    substrings.Add(string.Join("",before));
-                    substrings.Add(string.Join("", destination));
-                    substrings.Add(string.Join("", after));
+                    if (before.Length > 2)
+                        substrings.Add(string.Join("", before));
+                    if (destination.Length > 2)
+                        substrings.Add(string.Join("", destination));
+                    if (after.Length > 2)
+                        substrings.Add(string.Join("", after));
                 }
             }
             return substrings;
         }
 
-        public static void ShitlistCheck()
+        // Z-Algoritm, matches pattern in target in O(m) time
+        public static bool zAlgorithm(string pattern, string target)
         {
-            Console.WriteLine("=======================direct Manner===============");
+            string s = pattern + '$' + target;
+            int n = s.Length;
+            var z = new List<int>(new int[n]);
 
-            Exact_Matching S = new Exact_Matching();
-            string pattern = "abcdaaabchoabcd";
-            char[] Stest = pattern.ToCharArray();
-            char[] Stest1;
-            int z = 0;
-
-
-            /// Direct test using the Z-block function 
-            int[] M = S.Zblock(Stest);
-
-            for (int i = 0; i < M.Length; i++)
+            int goal = pattern.Length;
+            int r = 0, l = 0, i;
+            for (int k = 1; k < n; k++)
             {
-                Console.WriteLine(M[i].ToString());
+                if (k > r)
+                {
+                    for (i = k; i < n && s[i] == s[i - k]; i++) ;
+                    if (i > k)
+                    {
+                        z[k] = i - k;
+                        l = k;
+                        r = i - 1;
+                    }
+                }
+                else
+                {
+                    int kt = k - l, b = r - k + 1;
+                    if (z[kt] > b)
+                    {
+                        for (i = r + 1; i < n && s[i] == s[i - k]; i++) ;
+                        z[k] = i - k;
+                        l = k;
+                        r = i - 1;
+                    }
+                }
+                if ((z[k] == goal))
+                    return true;
             }
-            Console.WriteLine("=======================Indirect Manner===============");
-            /// Indirect test using the Zcalculate function
-            Console.WriteLine("the first z value = 0");
-            for (int i = 1; i < Stest.Length; i++)
-            {
-                Stest1 = S.Ssplit(i, Stest);
-                z = S.Zcalculate(Stest, Stest1);
-                Console.WriteLine(z);
-            }
+            return false;
         }
     }
 }
