@@ -83,7 +83,7 @@ namespace PGen
 
             if (password.Length < 1)
                 return PasswordScore.Blank;
-            if (password.Length < 4)
+            if (password.Length < 5)
                 return PasswordScore.VeryWeak;
             if (password.Length < 8)
                 return PasswordScore.Weak;
@@ -92,6 +92,10 @@ namespace PGen
                 score++;
             if (password.Length >= 12)
                 score++;
+            if (password.Length >= 16)
+                score++;
+            if (password.Length >= 20)
+                score++;
             if (Regex.Match(password, @"\d+", RegexOptions.ECMAScript).Success)
                 score++;
             if (Regex.Match(password, @"[a-z]", RegexOptions.ECMAScript).Success &&
@@ -99,6 +103,9 @@ namespace PGen
                 score++;
             if (Regex.Match(password, @".[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]", RegexOptions.ECMAScript).Success)
                 score++;
+
+            if (score > 5)
+                score = 5;
 
             return (PasswordScore)score;
         }
