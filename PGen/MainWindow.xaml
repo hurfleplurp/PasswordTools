@@ -298,7 +298,7 @@
                     </Label>
                 </Grid>
             </TabItem>
-            <TabItem>
+            <TabItem Visibility="Collapsed">
                 <TabItem.Header>
                     <StackPanel>
                         <TextBlock Text="Utils" />

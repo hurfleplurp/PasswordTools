@@ -39,6 +39,13 @@ namespace PGen
 
         public static PasswordScore CheckStrength(string password)
         {
+            if (password.Length < 1)
+                return PasswordScore.Blank;
+            if (password.Length < 5)
+                return PasswordScore.VeryWeak;
+            if (password.Length < 8)
+                return PasswordScore.Weak;
+
             if (ComplexityCalc.Wordlist.Count == 0)
                 ComplexityCalc.CreateUniqueShitlist();
 
@@ -81,12 +88,13 @@ namespace PGen
             if (badWords > 0)
                 score -= 2;
 
-            if (password.Length < 1)
-                return PasswordScore.Blank;
-            if (password.Length < 5)
-                return PasswordScore.VeryWeak;
-            if (password.Length < 8)
-                return PasswordScore.Weak;
+            if (badWords > 1)
+                for (int x = 1; x < badWords; x++)
+                {
+                    score--;
+                    if (x > 3)
+                        break;
+                }
 
             if (password.Length > 8)
                 score++;
@@ -95,7 +103,7 @@ namespace PGen
             if (password.Length >= 16)
                 score++;
             if (password.Length >= 20)
-                score++;
+                score+=2;
             if (Regex.Match(password, @"\d+", RegexOptions.ECMAScript).Success)
                 score++;
             if (Regex.Match(password, @"[a-z]", RegexOptions.ECMAScript).Success &&
@@ -106,6 +114,8 @@ namespace PGen
 
             if (score > 5)
                 score = 5;
+            if (score < 1)
+                score = 1;
 
             return (PasswordScore)score;
         }
