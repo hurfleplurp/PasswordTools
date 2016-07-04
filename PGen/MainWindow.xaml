@@ -180,6 +180,7 @@
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
                               FontStyle="Italic"
+                              SelectedValue="12"
                               SelectionChanged="DesiredLengthCombo_SelectionChanged"
                               TabIndex="6">
                         <ComboBox.Effect>

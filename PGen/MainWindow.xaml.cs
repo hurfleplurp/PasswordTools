@@ -136,13 +136,9 @@ namespace PGen
                                 return Tuple.Create("Strong", Brushes.MediumSpringGreen);
                             case PasswordScore.VeryStrong:
                                 return Tuple.Create("Very Strong", Brushes.Lime);
-                            default:
-                                break;
                         }
                         break;
                     }
-                default:
-                    break;
             }
 
             return styleInfo;
