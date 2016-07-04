@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Resources;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using STRING_Matching;
@@ -12,20 +14,22 @@ namespace PGen
 {
     public static class ComplexityCalc
     {
-        static string shitlist = @"..\..\Resources\shitlist.txt";
-
-        public static HashSet<string> wordlist = new HashSet<string>();
+        public static HashSet<string> Wordlist = new HashSet<string>();
 
         public static void CreateUniqueShitlist()
         {
-            using (StreamReader slrdr = new StreamReader(shitlist))
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "PGen.Resources.shitlist.txt";
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader slrdr = new StreamReader(stream))
             {
                 string line = "";
 
                 do
                 {
                     if (line.Count() > 3)
-                        wordlist.Add(line);
+                        Wordlist.Add(line);
 
                     line = slrdr.ReadLine();
                 }
@@ -41,7 +45,7 @@ namespace PGen
 
             var tempWordList = new List<string>();
 
-            foreach (var word in wordlist)
+            foreach (var word in Wordlist)
             {
                 if (counter < 10000)
                 {

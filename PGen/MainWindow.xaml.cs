@@ -19,7 +19,7 @@ namespace PGen
     /// </summary>
     public partial class MainWindow : Window
     {
-        private short passwordLength = 12;
+        private short _passwordLength = 12;
 
         public MainWindow()
         {
@@ -39,7 +39,7 @@ namespace PGen
 
         public static PasswordScore CheckStrength(string password)
         {
-            if (ComplexityCalc.wordlist.Count == 0)
+            if (ComplexityCalc.Wordlist.Count == 0)
                 ComplexityCalc.CreateUniqueShitlist();
 
             /********* HASHSET INTERSECT SEARCH ********/
@@ -47,7 +47,7 @@ namespace PGen
 
             var pwdString = ComplexityCalc.GetConsecutiveSubstrings(password);
 
-            var wordsInShitlist = pwdString.Intersect(ComplexityCalc.wordlist);
+            var wordsInShitlist = pwdString.Intersect(ComplexityCalc.Wordlist);
 
             //sw.Stop();
             //TimeSpan t1 = sw.Elapsed;
@@ -151,7 +151,7 @@ namespace PGen
             obfuscator.Salt = UrlTextBox.Text.ToLower() + UserNameTextBox.Text.ToLower();
             obfuscator.RegEx = @RegexTextBox.Text;
             obfuscator.ReplacementText = ReplaceTextBox.Text;
-            obfuscator.DesiredLength = passwordLength;
+            obfuscator.DesiredLength = _passwordLength;
             obfuscator.GeneratePassword();
 
             RegexInvalidLabel.Visibility = Visibility.Visible;
@@ -174,7 +174,7 @@ namespace PGen
         private void DesiredLengthCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem lengthItem = (ComboBoxItem)DesiredLengthCombo.SelectedItem;
-            passwordLength = Convert.ToInt16(lengthItem.Content);
+            _passwordLength = Convert.ToInt16(lengthItem.Content);
         }
 
         private void label_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
