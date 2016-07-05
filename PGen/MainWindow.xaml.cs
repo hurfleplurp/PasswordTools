@@ -201,7 +201,7 @@ namespace PGen
         private void label_MouseLeave(object sender, MouseEventArgs e)
         {
             Label clickedLabel = sender as Label;
-            clickedLabel.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFFFFF");
+            clickedLabel.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF999999");
         }
 
         private void label_MouseDown(object sender, MouseButtonEventArgs e)
@@ -232,6 +232,20 @@ namespace PGen
             GeneratedPwdStrLab.Visibility = Visibility.Visible;
             GeneratedPwdStrLab.Content = enumStyle.Item1;
             GeneratedPwdStrLab.Foreground = enumStyle.Item2;
+        }
+
+        private void pGenHeaderLab_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var tab = (TabItem)tabControl.Items[0];
+            tab.Visibility = Visibility.Visible;
+            label.Visibility = Visibility.Visible;
+        }
+
+        private void PGen_MouseLeave(object sender, MouseEventArgs e)
+        {
+            var tab = (TabItem) tabControl.Items[0];
+            tab.Visibility = Visibility.Hidden;
+            label.Visibility = Visibility.Hidden;
         }
     }
 }

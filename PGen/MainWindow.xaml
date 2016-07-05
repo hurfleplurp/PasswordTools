@@ -3,23 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Name="PGen"
         Title="PGen"
-        Width="525"
+        Width="545"
         Height="376"
         AllowDrop="True"
         AllowsTransparency="True"
         Icon="keychain-48.ico"
         ResizeMode="NoResize"
-        WindowStyle="None">
+        WindowStyle="None" MouseLeave="PGen_MouseLeave" Margin="0" Foreground="{x:Null}" Padding="0,0,0,0">
     <Window.Background>
         <SolidColorBrush Opacity="0" Color="White" />
     </Window.Background>
-    <Grid>
-        <TabControl x:Name="tabControl" Width="525">
-            <TabItem>
+    <Grid HorizontalAlignment="Left" Width="525" Margin="10,0,0,10" Height="366" VerticalAlignment="Bottom">
+        <Grid.Effect>
+            <DropShadowEffect Direction="270" RenderingBias="Quality" BlurRadius="5" ShadowDepth="3" Opacity="0.5"/>
+        </Grid.Effect>
+        <TabControl x:Name="tabControl" Width="525" Background="#FF27283C" Foreground="{x:Null}" BorderBrush="{x:Null}" BorderThickness="1" Padding="1" HorizontalAlignment="Right">
+            <TabItem BorderBrush="{x:Null}" Background="{x:Null}" Margin="-1,0,0,0" Padding="0,0,0,-2" BorderThickness="0" Visibility="Hidden" HorizontalAlignment="Left" Width="29" Foreground="Black">
                 <TabItem.Header>
-                    <StackPanel>
-                        <TextBlock Text="PGen" />
-                    </StackPanel>
+                    <Border BorderThickness="0" BorderBrush="#FF27283C" Background="#FF27283C" Height="16">
+                        <StackPanel HorizontalAlignment="Stretch" Margin="1,1,1,-1" Background="#FF61616A" ClipToBounds="True" Height="14" VerticalAlignment="Top">
+                            <TextBlock Text="PGen" Width="27" Height="14" FontSize="10" Margin="0" />
+                        </StackPanel>
+                    </Border>
                 </TabItem.Header>
                 <Grid Background="#FF61616A">
 
@@ -271,7 +276,7 @@
                            FontWeight="Bold" />
 
                     <Label x:Name="pGenHeaderLab"
-                           Width="519"
+                           Width="521"
                            Height="25"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top"
@@ -279,7 +284,11 @@
                            Background="#FF888888"
                            Content="Algorithmic Password Generator"
                            MouseDown="headerLab_MouseDown"
-                           Padding="5,4,5,0" />
+                           Padding="5,4,5,0" MouseEnter="pGenHeaderLab_MouseEnter" BorderBrush="#FFABADB3" BorderThickness="1" >
+                        <Label.Effect>
+                            <DropShadowEffect Direction="270" ShadowDepth="1" BlurRadius="2" RenderingBias="Quality" Opacity="0.5"/>
+                        </Label.Effect>
+                    </Label>
                     <Label Name="GeneratedPwdStrLab"
                            Width="101"
                            Height="35"
@@ -340,25 +349,24 @@
             </TabItem>
         </TabControl>
         <Label x:Name="label"
-               Width="23"
-               Height="20"
-               Margin="502,0,0,353"
-               HorizontalAlignment="Left"
+               Height="18"
+               Margin="506,0,0,348"
                VerticalAlignment="Bottom"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Center"
-               BorderBrush="#FFACACAC"
-               BorderThickness="1,1,1,0"
+               BorderBrush="#FF27283C"
+               BorderThickness="1"
                Content="X"
                FontFamily="Segoe UI Black"
+               Visibility="Hidden"
                MouseDown="label_MouseDown"
                MouseEnter="label_MouseEnter"
                MouseLeave="label_MouseLeave"
                MouseLeftButtonUp="label_MouseLeftButtonUp"
-               Padding="1"
-               RenderTransformOrigin="0.604,0.5">
+               Padding="1,-1,1,1"
+               RenderTransformOrigin="0.604,0.5" HorizontalAlignment="Left" Width="18">
             <Label.Background>
-                <SolidColorBrush Opacity="0.995" Color="White" />
+                <SolidColorBrush Opacity="0.995" Color="#FF61616A" />
             </Label.Background>
         </Label>
     </Grid>
