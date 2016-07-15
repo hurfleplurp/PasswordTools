@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Windows.Media;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Windows.Media;
 
-namespace PGen.Obfuscation
+namespace PGen.Utils
 {
     enum HashType { SHA1, SHA256, SHA384, SHA512, MD5 }
     internal interface IHasher

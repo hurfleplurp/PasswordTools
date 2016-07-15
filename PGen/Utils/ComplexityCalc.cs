@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Resources;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using STRING_Matching;
 
-namespace PGen
+namespace PGen.Utils
 {
     public static class ComplexityCalc
     {

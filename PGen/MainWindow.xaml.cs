@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using PGen.Utils;
 
 namespace PGen
 {
-    using Obfuscation;
     using System;
     using System.Diagnostics;
     using System.Text.RegularExpressions;
@@ -86,13 +86,10 @@ namespace PGen
             int score = 0;
 
             if (badWords > 0)
-                score -= 2;
-
-            if (badWords > 1)
                 for (int x = 1; x < badWords; x++)
                 {
                     score--;
-                    if (x > 3)
+                    if (x > 2)
                         break;
                 }
 
@@ -112,8 +109,10 @@ namespace PGen
             if (Regex.Match(password, @".[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]", RegexOptions.ECMAScript).Success)
                 score++;
 
+            // Limit highest score to 5
             if (score > 5)
                 score = 5;
+            // Limit lowest score to 1
             if (score < 1)
                 score = 1;
 
