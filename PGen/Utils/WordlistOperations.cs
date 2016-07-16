@@ -36,7 +36,7 @@
         {
             var hashSetList = new List<HashSet<string>>();
 
-            int counter = 0;
+            var counter = 0;
 
             var tempWordList = new List<string>();
 
