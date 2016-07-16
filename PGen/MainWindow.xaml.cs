@@ -19,11 +19,11 @@ namespace PGen
     /// </summary>
     public partial class MainWindow : Window
     {
-        private short _passwordLength = 12;
+        private short passwordLength = 12;
 
+        private static HashSet<string> wordlist = new HashSet<string>();
         public MainWindow()
         {
-            
             InitializeComponent();
         }
 
@@ -46,19 +46,19 @@ namespace PGen
             if (password.Length < 8)
                 return PasswordScore.Weak;
 
-            if (ComplexityCalc.Wordlist.Count == 0)
-                ComplexityCalc.CreateUniqueShitlist();
+            if (wordlist.Count == 0)
+                WordlistOperations.CreateUniqueShitlist(ref wordlist);
 
             /********* HASHSET INTERSECT SEARCH ********/
             //var sw = Stopwatch.StartNew();
 
             var pwdString = ComplexityCalc.GetConsecutiveSubstrings(password);
 
-            var wordsInShitlist = pwdString.Intersect(ComplexityCalc.Wordlist);
+            var wordsInShitlist = pwdString.Intersect(wordlist);
 
             //sw.Stop();
             //TimeSpan t1 = sw.Elapsed;
-            int badWords = wordsInShitlist.Count();
+            var badWords = wordsInShitlist.Count();
 
             /********* .NET LINQ SEARCH ********/
             //var sw2 = Stopwatch.StartNew();
@@ -83,10 +83,10 @@ namespace PGen
             //sw3.Stop();
             //TimeSpan t3 = sw3.Elapsed;
 
-            int score = 0;
+            var score = 0;
 
             if (badWords > 0)
-                for (int x = 1; x < badWords; x++)
+                for (var x = 1; x < badWords; x++)
                 {
                     score--;
                     if (x > 2)
@@ -160,7 +160,7 @@ namespace PGen
             obfuscator.Salt = UrlTextBox.Text.ToLower() + UserNameTextBox.Text.ToLower();
             obfuscator.RegEx = @RegexTextBox.Text;
             obfuscator.ReplacementText = ReplaceTextBox.Text;
-            obfuscator.DesiredLength = _passwordLength;
+            obfuscator.DesiredLength = this.passwordLength;
             obfuscator.GeneratePassword();
 
             RegexInvalidLabel.Visibility = Visibility.Visible;
@@ -183,7 +183,7 @@ namespace PGen
         private void DesiredLengthCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem lengthItem = (ComboBoxItem)DesiredLengthCombo.SelectedItem;
-            _passwordLength = Convert.ToInt16(lengthItem.Content);
+            this.passwordLength = Convert.ToInt16(lengthItem.Content);
         }
 
         private void label_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
