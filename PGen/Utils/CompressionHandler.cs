@@ -52,6 +52,19 @@ namespace PGen.Utils
                 }
         }
 
+        public static string DecompressStreamToString(Stream stream)
+        {
+            using (var msi = (MemoryStream)stream)
+                using (var mso = new MemoryStream())
+                {
+                    using (var gs = new GZipStream(msi, CompressionMode.Decompress))
+                    {
+                        CopyTo(gs, mso);
+                    }
+                return DecompressByteStream(mso.ToArray()).ToString();
+                }
+        }
+
         private static void CopyTo(Stream src, Stream dest)
         {
             byte[] bytes = new byte[4096];

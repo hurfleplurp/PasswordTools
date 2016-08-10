@@ -24,7 +24,7 @@ namespace PGen
         private static HashSet<string> wordlist = new HashSet<string>();
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         public enum PasswordScore
@@ -160,7 +160,7 @@ namespace PGen
             obfuscator.Salt = UrlTextBox.Text.ToLower() + UserNameTextBox.Text.ToLower();
             obfuscator.RegEx = @RegexTextBox.Text;
             obfuscator.ReplacementText = ReplaceTextBox.Text;
-            obfuscator.DesiredLength = this.passwordLength;
+            obfuscator.DesiredLength = passwordLength;
             obfuscator.GeneratePassword();
 
             RegexInvalidLabel.Visibility = Visibility.Visible;
@@ -200,13 +200,34 @@ namespace PGen
         private void label_MouseLeave(object sender, MouseEventArgs e)
         {
             Label clickedLabel = sender as Label;
-            clickedLabel.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF999999");
+            clickedLabel.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF61616A");
         }
 
         private void label_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Label clickedLabel = sender as Label;
             clickedLabel.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFA82B2B");
+        }
+        private void labelMinimize_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Label clickedLabel = sender as Label;
+            clickedLabel.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFB0B0B6");
+        }
+
+        private void labelMinimize_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Label clickedLabel = sender as Label;
+            clickedLabel.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF61616A");
+        }
+
+        private void labelMinimize_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Label clickedLabel = sender as Label;
+            clickedLabel.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF323236");
+        }
+        private void labelMinimize_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;;
         }
 
         private void headerLab_MouseDown(object sender, MouseButtonEventArgs e)
@@ -237,14 +258,16 @@ namespace PGen
         {
             var tab = (TabItem)tabControl.Items[0];
             tab.Visibility = Visibility.Visible;
-            label.Visibility = Visibility.Visible;
+            this.labelClose.Visibility = Visibility.Visible;
+            this.labelMinimize.Visibility = Visibility.Visible;
         }
 
         private void PGen_MouseLeave(object sender, MouseEventArgs e)
         {
             var tab = (TabItem) tabControl.Items[0];
             tab.Visibility = Visibility.Hidden;
-            label.Visibility = Visibility.Hidden;
+            this.labelClose.Visibility = Visibility.Hidden;
+            this.labelMinimize.Visibility = Visibility.Hidden;
         }
     }
 }
